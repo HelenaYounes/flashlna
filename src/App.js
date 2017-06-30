@@ -1,170 +1,57 @@
 import React, { Component } from 'react';
 import eiffel from './toureiffel.png';
 import Card from './Card';
-import Toggle from 'react-toggle';
-
+import MyDictionary from './dictionary.js';
+import { MuiThemeProvider } from 'material-ui/styles';
+import { LabelSwitch } from 'material-ui/Switch';
 import './App.css';
+
 
 class App extends Component {
   constructor(props){
     super(props)
     this.state={
-      dictionary:[
-        {
-          english: "cat ",
-          french: "le chat",
-        },
-        {
-          english: "dog ",
-          french: "le chien",
-        },
-        {
-      english:"To clean",
-      french:"Nettoyer",
-    },
-    {
-      english:"To drive",
-      french:"Conduire",
-    },
-    {
-      english:"To tidy",
-      french:"Ranger",
-    },
-    {
-      english:"Alarm clock",
-      french:"Un reveil",
-    },
-    {
-      english:"Shoe",
-      french:"Une chaussure",
-    },
-    {
-      english:"Trousers",
-      french:"Un pantalon",
-    },
-    {
-      english:"sweater",
-      french:"Un pull",
-    },
-    {
-      english:"A cap",
-      french:"Une casquette",
-    },
-    {
-      english:"A ring",
-      french:"Une bague",
-    },
-    {
-      english:"A watch",
-      french:"Une montre",
-    },
-    {
-      english:"Door",
-      french:"Une porte",
-    },
-    {
-      english:"Window",
-      french:"Une fenêtre",
-    },
-    {
-      english:"Bird",
-      french:"Un oiseau",
-    },
-    {
-      english:"Dog",
-      french:"Un chien",
-    },
-    {
-      english:"Hello",
-      french:"Bonjour",
-    },
-    {
-      english:"How are you?",
-      french:"Comment vas tu?",
-    },
-    {
-      english:"How are you?",
-      french:"Comment allez vous?",
-    },
-    {
-      english:"Please",
-      french:"S'il te plaît",
-    },
-    {
-      english:"Please",
-      french:"S'il vous plaît",
-    },
-    {
-      english:"Dog",
-      french:"Un chien",
-    },
-    {
-      english:"You are welcome",
-      french:"De rien",
-    },
-    {
-      english:"Welcome",
-      french:"Bienvenue",
-    },
-    {
-      english:"See you later",
-      french:"A plus tard",
-    },
-    {
-      english:"See you tomorrow",
-      french:"A demain",
-    },
-    {
-      english:"Goodbye",
-      french:"Au revoir",
-    },
-    {
-      english:"There is",
-      french:"Il y a",
-    },
-    {
-      english:"Ago",
-      french:"Il y a",
-    },
-    {
-      english:"How are you doing",
-      french:"Ça va bien?",
-    },
-    {
-      english:"Agreed",
-      french:"D'accord",
-    },
-    {
-      english:"I agree",
-      french:"Je suis d'accord",
-    },
-      ],
+      dictionary: MyDictionary,
       isFlipped: false,
       currentIndex: 0,
-      englishFirst: true,
+      checkedFrench: false,
 
     }
 
   }
 
 
-  handleKeyPress(e) {
 
-
-      alert('key pressed')
-
-  }
   flipcard() {
     this.setState(({ isFlipped }) => ({ isFlipped: !isFlipped }))
   }
 
-  displayWord(){
+  displayEnglishFirst(){
     if(this.state.isFlipped){
-      return this.state.dictionary.french
+      return this.state.dictionary[this.state.currentIndex].french
     }
 
-    return this.state.dictionary.english
+    return this.state.dictionary[this.state.currentIndex].english
   }
+
+  displayFrenchFirst(){
+    if(this.state.isFlipped){
+      return this.state.dictionary[this.state.currentIndex].english
+    }
+
+    return this.state.dictionary[this.state.currentIndex].french
+  }
+
+  displayWord(){
+    if(this.state.checkedFrench){
+      return this.displayFrenchFirst()
+
+    }
+    else{
+     return this.displayEnglishFirst()
+    }
+  }
+
 
   getNextCard(){
     this.setState(({ isFlipped }) => ({ isFlipped: false }))
@@ -186,38 +73,36 @@ class App extends Component {
     }
   }
 
-  changeLangage(){
-    this.setState(({englishFirst}) => ({englishFirst: !englishFirst}))
-
+  switchLangage(){
+    this.setState(({ checkedFrench}) => ({checkedFrench: !checkedFrench}))
   }
 
 
-
   render() {
-
     return (
+      <MuiThemeProvider>
 
+        <div className="App">
+          <div className="App-header">
+            <img src={eiffel} className="Applogo" alt="logo" />
+            <h2>Welcome to my flashcard app</h2>
+          </div>
+          <LabelSwitch
+             onChange={() => this.switchLangage()}
+             label="French"
+           />
+          <Card
+          word= {this.displayWord()}
+          onClick={() => this.flipcard()}
 
+          />
+          <button className="button" onClick ={() => this.getPrevCard()}>PREVIOUS</button>
 
-      <div className="App" onKeyPress = {(e) => this.onKeyPress(e)}>
-        <div className="App-header">
-          <img src={eiffel} className="Applogo" alt="logo" />
-          <h2>Welcome to my flashcard app</h2>
+          <button className="button" onClick ={() => this.getNextCard()}>NEXT</button>
+
         </div>
-        <Toggle className="toggle" onChange={() => this.changeLangage()}></Toggle>
+      </MuiThemeProvider>
 
-
-        <Card
-        word= {(this.state.isFlipped)? this.state.dictionary[this.state.currentIndex].french :
-          this.state.dictionary[this.state.currentIndex].english}
-        onClick={() => this.flipcard()}
-        onKeyPress = {(e) => this.onKeyPress(e)}
-        />
-        <button className="button" onClick ={() => this.getPrevCard()}>PREVIOUS</button>
-
-        <button className="button" onClick ={() => this.getNextCard()}>NEXT</button>
-
-      </div>
     );
   }
 }

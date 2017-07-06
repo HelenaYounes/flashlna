@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import eiffel from './toureiffel.png';
-import Card from './Card';
-import MyDictionary from './dictionary.js';
-import MyLists from './lists.js';
+
 import { MuiThemeProvider } from 'material-ui/styles';
 import { LabelSwitch } from 'material-ui/Switch';
 import {createStore} from 'redux';
 //import { ADD_CARD, REMOVE_CARD } from './actionTypes'
 import './App.css';
+import eiffel from './toureiffel.png';
+import Card from './Card';
+import MyDictionary from './dictionary.js';
+import MyLists from './lists.js';
+import List from './List.js';
 
 // var reducer = function (state = 0, action) {
 //   console.log('reducer_3 was called with state', state, 'and action', action)
@@ -64,6 +66,8 @@ class App extends Component {
       this.state.dictionary[this.state.currentDicoIndex].french
   }
 
+
+
   displayWord(){
     return this.state.checkedFrench?
       this.displayFrenchFirst():this.displayEnglishFirst()
@@ -99,6 +103,7 @@ class App extends Component {
              onChange={() => this.switchLangage()}
              label="French"
           />
+          <List listName= {this.state.lists[0].name}></List>
           <Card
             word= {this.displayWord()}
             onClick={() => this.flipcard()}

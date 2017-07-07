@@ -4,6 +4,25 @@ body {
   font-family: sans-serif;
 }
 
+/*.App-header {
+  grid-area: header;
+}
+.switch {
+  grid-area: toggle;
+}
+
+.button {
+  grid-area: footer;
+}
+
+.container {
+  grid-template-columns: 100px 100px 200px 50px;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "header header header toggle"
+    "myLists myCard myCard ."
+    ". footer footer .";
+}*/
 .cardArea {
   display:flex;
   flex-wrap: wrap;

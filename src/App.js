@@ -95,22 +95,35 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div className="App">
-          <div className="App-header">
-            <img src={eiffel} className="Applogo" alt="logo" />
-            <h2>Welcome to my flashcard app</h2>
+          <div className="container">
+            <div className="App-header">
+              <img src={eiffel} className="Applogo" alt="logo" />
+              <h2>Ongi etorri</h2>
+            </div>
+            <LabelSwitch
+               className ="switch"
+               onChange={() => this.switchLangage()}
+               label="French"
+            />
+            <div className="container">
+
+              <div className = "myLists">
+                {this.state.lists.map((item, index) => <List listName= {this.state.lists[index].name}/>)}
+              </div>
+              <List className ="flashcardArea" listName= {this.state.lists[this.state.currentListIndex].name}/>
+              <Card
+                word= {this.displayWord()}
+                onClick={() => this.flipcard()}
+              />
+              <button className="button" onClick ={() => this.getPrevCard()}>PREVIOUS</button>
+              <button className="button" onClick ={() => this.getNextCard()}>NEXT</button>
+            </div>
           </div>
-          <LabelSwitch
-             onChange={() => this.switchLangage()}
-             label="French"
-          />
-          <List listName= {this.state.lists[0].name}></List>
-          <Card
-            word= {this.displayWord()}
-            onClick={() => this.flipcard()}
-          />
-          <button className="button" onClick ={() => this.getPrevCard()}>PREVIOUS</button>
-          <button className="button" onClick ={() => this.getNextCard()}>NEXT</button>
-        </div>
+
+
+
+          </div>
+
       </MuiThemeProvider>
     );
   }

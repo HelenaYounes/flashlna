@@ -23,6 +23,30 @@ body {
     "myLists myCard myCard ."
     ". footer footer .";
 }*/
+.App-header {
+  grid-area: header;
+}
+.switch {
+  grid-area: switch;
+}
+.myLists{
+  grid-area: lists;
+}
+.flashcardArea {
+  grid-area: card;
+}
+
+
+
+.container {
+  display: grid;
+  grid-template-columns: auto 500px auto;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "header header header"
+    "lists  card switch "
+    ". . . ";
+}
 .cardArea {
   display:flex;
   flex-wrap: wrap;

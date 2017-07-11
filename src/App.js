@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 
 import { MuiThemeProvider } from 'material-ui/styles';
 import { LabelSwitch } from 'material-ui/Switch';
-import {createStore} from 'redux';
+//import {createStore} from 'redux';
 //import { ADD_CARD, REMOVE_CARD } from './actionTypes'
 import './App.css';
 import eiffel from './toureiffel.png';
 import Card from './Card';
-import MyDictionary from './dictionary.js';
 import MyLists from './lists.js';
 import List from './List.js';
 
@@ -37,15 +36,11 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state={
-      dictionary: MyDictionary,
       lists: MyLists,
       isFlipped: false,
-      currentDicoIndex: 0,
       checkedFrench: false,
       currentListIndex: 0,
       currentListWordIndex: 0,
-
-
     }
   }
 
@@ -56,14 +51,14 @@ class App extends Component {
 
   displayEnglishFirst(){
       return this.state.isFlipped?
-        this.state.dictionary[this.state.currentDicoIndex].french:
-        this.state.dictionary[this.state.currentDicoIndex].english
+        this.state.lists[this.state.currentListIndex].words[this.state.currentListWordIndex].french:
+        this.state.lists[this.state.currentListIndex].words[this.state.currentListWordIndex].english
   }
 
   displayFrenchFirst(){
     return this.state.isFlipped?
-      this.state.dictionary[this.state.currentDicoIndex].english:
-      this.state.dictionary[this.state.currentDicoIndex].french
+      this.state.lists[this.state.currentListIndex].words[this.state.currentListWordIndex].english:
+      this.state.lists[this.state.currentListIndex].words[this.state.currentListWordIndex].french
   }
 
 
@@ -75,20 +70,27 @@ class App extends Component {
 
   getNextCard(){
     this.setState(({ isFlipped }) => ({ isFlipped: false }))
-    this.state.currentDicoIndex < this.state.dictionary.length -1?
-      this.setState(({ currentDicoIndex}) => ({ currentDicoIndex: currentDicoIndex +1})):
-      this.setState(({ currentDicoIndex}) => ({ currentDicoIndex: 0}))
+    this.state.currentListWordIndex < this.state.lists[this.state.currentListIndex].words.length -1?
+      this.setState(({ currentListWordIndex}) => ({ currentListWordIndex: currentListWordIndex +1})):
+      this.setState(({ currentListWordIndex}) => ({ currentListWordIndex: 0}))
   }
 
   getPrevCard(){
     this.setState(({ isFlipped }) => ({ isFlipped: false }))
-    this.state.currentDicoIndex > 0?
-      this.setState(({ currentDicoIndex}) => ({ currentDicoIndex: currentDicoIndex -1})):
-      this.setState(({ currentDicoIndex}) => ({ currentDicoIndex: this.state.dictionary.length -1}))
+    this.state.currentListWordIndex > 0?
+      this.setState(({ currentListWordIndex}) => ({ currentListWordIndex: currentListWordIndex -1})):
+      this.setState(({ currentListWordIndex}) => ({ currentListWordIndex: this.state.dictionary.length -1}))
     }
 
   switchLangage(){
     this.setState(({ checkedFrench}) => ({checkedFrench: !checkedFrench}))
+  }
+
+  showList(index){
+    debugger;
+    this.setState(({currentListIndex}) => ({currentListIndex: index}))
+    this.setState(({currentListWordIndex}) => ({currentListWordIndex: 0}))
+    this.displayWord()
   }
 
   render() {
@@ -105,12 +107,11 @@ class App extends Component {
                onChange={() => this.switchLangage()}
                label="French"
             />
-            <div className="container">
-
               <div className = "myLists">
-                {this.state.lists.map((item, index) => <List listName= {this.state.lists[index].name}/>)}
+                {this.state.lists.map((item, index) => <button key= {index} onClick={() => this.showList(index)}>{this.state.lists[index].name} </button>)}
               </div>
-              <List className ="flashcardArea" listName= {this.state.lists[this.state.currentListIndex].name}/>
+              <div className  ="flashcardArea">
+              <List listName= {this.state.lists[this.state.currentListIndex].name}/>
               <Card
                 word= {this.displayWord()}
                 onClick={() => this.flipcard()}
@@ -118,12 +119,8 @@ class App extends Component {
               <button className="button" onClick ={() => this.getPrevCard()}>PREVIOUS</button>
               <button className="button" onClick ={() => this.getNextCard()}>NEXT</button>
             </div>
+            </div>
           </div>
-
-
-
-          </div>
-
       </MuiThemeProvider>
     );
   }

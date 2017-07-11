@@ -1,5 +1,5 @@
 const theLists = [
-  {name: "dictionary", words:
+  {name: "Dictionary", words:
     [
       {
         english: "bear",

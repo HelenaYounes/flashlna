@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 
-class List extends Component {
+class MyList extends Component {
 
 
   render(){

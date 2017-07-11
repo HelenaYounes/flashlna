@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 
 import { MuiThemeProvider } from 'material-ui/styles';
 import { LabelSwitch } from 'material-ui/Switch';
+import List, { ListItem, ListItemText } from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
+
 //import {createStore} from 'redux';
 //import { ADD_CARD, REMOVE_CARD } from './actionTypes'
 import './App.css';
 import eiffel from './toureiffel.png';
 import Card from './Card';
 import MyLists from './lists.js';
-import List from './List.js';
 
 // var reducer = function (state = 0, action) {
 //   console.log('reducer_3 was called with state', state, 'and action', action)
@@ -87,7 +89,6 @@ class App extends Component {
   }
 
   showList(index){
-    debugger;
     this.setState(({currentListIndex}) => ({currentListIndex: index}))
     this.setState(({currentListWordIndex}) => ({currentListWordIndex: 0}))
     this.displayWord()
@@ -97,21 +98,23 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div className="App">
-          <div className="container">
+
             <div className="App-header">
               <img src={eiffel} className="Applogo" alt="logo" />
-              <h2>Ongi etorri</h2>
+              <h1>Ongi Etorri</h1>
+              <LabelSwitch
+                 className ="switch"
+                 onChange={() => this.switchLangage()}
+                 label="French"
+              />
             </div>
-            <LabelSwitch
-               className ="switch"
-               onChange={() => this.switchLangage()}
-               label="French"
-            />
-              <div className = "myLists">
-                {this.state.lists.map((item, index) => <button key= {index} onClick={() => this.showList(index)}>{this.state.lists[index].name} </button>)}
-              </div>
+            <div className="container">
+
+              <List  className="myLists">
+                {this.state.lists.map((item, index) => <ListItem button className='lists' key= {index} onClick={() => this.showList(index)}><Avatar alt="list image" src={eiffel}/><ListItemText primary={this.state.lists[index].name}/> </ListItem>)}
+              </List>
               <div className  ="flashcardArea">
-              <List listName= {this.state.lists[this.state.currentListIndex].name}/>
+                <span><h2><b>{this.state.lists[this.state.currentListIndex].name}</b></h2></span>
               <Card
                 word= {this.displayWord()}
                 onClick={() => this.flipcard()}

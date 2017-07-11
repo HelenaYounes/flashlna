@@ -4,56 +4,33 @@ body {
   font-family: sans-serif;
 }
 
-/*.App-header {
-  grid-area: header;
-}
-.switch {
-  grid-area: toggle;
-}
-
-.button {
-  grid-area: footer;
+.App-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .container {
-  grid-template-columns: 100px 100px 200px 50px;
-  grid-template-rows: auto;
-  grid-template-areas:
-    "header header header toggle"
-    "myLists myCard myCard ."
-    ". footer footer .";
-}*/
-.App-header {
-  grid-area: header;
+  display: inline-flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+
 }
-.switch {
-  grid-area: switch;
-}
-.myLists{
-  grid-area: lists;
-}
+
+
 .flashcardArea {
+  display: block;
   grid-area: card;
 }
 
-
-
-.container {
-  display: grid;
-  grid-template-columns: auto 500px auto;
-  grid-template-rows: auto;
-  grid-template-areas:
-    "header header header"
-    "lists  card switch "
-    ". . . ";
-}
 .cardArea {
   display:flex;
   flex-wrap: wrap;
   padding:50px;
   justify-content: center;
   align-items: center;
-
 }
 
 .card {
@@ -68,21 +45,14 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-
-
 }
+
 .button {
   width: 100px;
   height:50px;
   margin: 20px;
 }
 
-.toggle{
-  position: absolute;
-  margin-top:50px;
-  float: right;
-
-}
 .react-toggle {
   touch-action: pan-x;
 
